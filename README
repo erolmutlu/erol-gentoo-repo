@@ -1,0 +1,24 @@
+Gentoo için Ebuild Deposu
+
+Layman'a eklenmesi
+
+Layman
+
+layman -f -o https://raw.github.com/erolmutlu/erol-gentoo-repo/master/layman.xml -a erol
+
+veya Layman ayar dosyasını düzenle: /etc/layman/layman.cfg ve aşağıdaki ikinci satırı ekle :
+
+overlays  : http://www.gentoo.org/proj/en/overlays/layman-global.txt
+            https://raw.github.com/erolmutlu/erol-gentoo-repo/master/layman.xml
+
+Akabinde aşağıdaki komutları sırası ile çalıştırın:
+
+layman -L
+layman -a erol
+layman -S
+
+Tüm sorumluluk tarafınıza aittir,
+
+İyi Çalışmalar
+
+EROL
