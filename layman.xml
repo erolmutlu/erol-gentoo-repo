@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <layman>
-    <overlay type="git" src="git://github.com/erolmutlu/erol-gentoo-repo.git" contact="cm@erolmutlu.com" status="unofficial" name="erol">
-        <link>git://github.com/erolmutlu/erol-gentoo-repo.git</link>
+    <overlay type="git" src="https://github.com/erolmutlu/erol-gentoo-repo.git" contact="cm@erolmutlu.com" status="unofficial" name="erol">
+        <link>https://github.com/erolmutlu/erol-gentoo-repo.git</link>
         <description>Another Gentoo Overlay.</description>
     </overlay>
 </layman>
