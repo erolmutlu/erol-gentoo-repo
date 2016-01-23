@@ -1,35 +1,3 @@
-
-gpo.zugaina.org
-Search Portage & Overlays:
-Newest News GLSAs Browse USE Flags Overlays More...
-media-tv/plex-media-server
-Plex Media Server is an organizer for your media and provides streaming 
-over the web and to devices
-
-    http://plex.tv/
-
-    plex-media-server-0.9.15.1
-    -* ~amd64 ~x86
-
-    View      Download      Browse     License: PMS-EULA   
-    Overlay: fkmclane (layman)
-    plex-media-server-0.9.14.6
-    -* amd64 x86
-
-    View      Download      Browse     License: PMS-EULA   
-    Overlay: fkmclane (layman)
-
-ChangeLog USE Flags Dependencies Reverse Deps Related Bugs
-
-
-
-gpo.zugaina.org - An unofficial overlays portage website
-"Gentoo" is a trademark of Gentoo Foundation, Inc.
-Website code from Mike Valstar and Ycarus
-Gentoo Portage Overlays by Ycarus/Zugaina.org
-This site is hosted graciously by Zugaina SAS
-Close
-
 # Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
@@ -118,5 +86,4 @@ script or systemd unit."
 	einfo "To manage your library and sign in to Plex, go to 
 \"http://localhost:32400/web\"."
 }
-
 
