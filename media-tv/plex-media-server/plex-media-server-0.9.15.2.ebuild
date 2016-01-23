@@ -52,7 +52,6 @@ pkg_setup() {
 
 src_prepare() {
 	epatch "${FILESDIR}/start_pms_opt.patch"
-	epatch "${FILESDIR}/0001-fix-TR-language-font-to-UTF-8.patch"
 }
 
 src_install() {
@@ -82,6 +81,7 @@ src_install() {
 }
 
 pkg_postinst() {
+        epatch "${FILESDIR}/0001-fix-TR-language-font-to-UTF-8.patch"
 	einfo "To start Plex Media Server, use the plexmediaserver init 
 script or systemd unit."
 	einfo "To manage your library and sign in to Plex, go to 
