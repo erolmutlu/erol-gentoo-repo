@@ -52,6 +52,7 @@ pkg_setup() {
 
 src_prepare() {
 	epatch "${FILESDIR}/start_pms_opt.patch"
+	epatch "${FILESDIR}/0001-fix-TR-language-font-to-UTF-8.patch"
 }
 
 src_install() {
