@@ -44,8 +44,7 @@ QA_PREBUILT="*"
 
 pkg_setup() {
 	enewgroup plex
-	enewuser plex -1 /bin/sh /var/lib/plexmediaserver "plex" 
---system
+	enewuser plex -1 /bin/sh /var/lib/plexmediaserver "plex" --system
 }
 
 src_prepare() {
