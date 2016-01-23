@@ -1,5 +1,5 @@
---- a//opt/plexmediaserver/Resources/Plug-ins-*/OpenSubtitles.bundle/Contents/Code/__init__.py
-+++ b//opt/plexmediaserver/Resources/Plug-ins-*/OpenSubtitles.bundle/Contents/Code/__init__.py
+--- a//opt/plexmediaserver/Resources/Plug-ins-*${COMMIT}/OpenSubtitles.bundle/Contents/Code/__init__.py
++++ b//opt/plexmediaserver/Resources/Plug-ins-${COMMIT}/OpenSubtitles.bundle/Contents/Code/__init__.py
 
 @@ -210,6 +210,12 @@
          if downloadQuota > 0:
