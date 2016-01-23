@@ -1,14 +1,3 @@
-From f4f9fe482f5e2ba9ee716e09ea72f0bed23a4f72 Mon Sep 17 00:00:00 2001
-From: Erol Mutlu <erol@erolmutlu.com>
-Date: Sat, 23 Jan 2016 12:20:47 +0200
-Subject: [PATCH] fix TR language font to UTF-8
-
----
- opensubtitles.fix/__init__.py | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/opensubtitles.fix/__init__.py b/opensubtitles.fix/__init__.py
-index 546a2d7..62b4d01 100644
 --- a/opensubtitles.fix/__init__.py
 +++ b/opensubtitles.fix/__init__.py
 @@ -210,6 +210,12 @@ def fetchSubtitles(proxy, token, part, imdbID=None, filename=None, season=None,
@@ -24,6 +13,4 @@ index 546a2d7..62b4d01 100644
            part.subtitles[Locale.Language.Match(st['SubLanguageID'])][subUrl] = Proxy.Media(subData, ext=st['SubFormat'])
            Log('Download quota: %d' % (downloadQuota))
  
--- 
-2.6.4
-
+--
