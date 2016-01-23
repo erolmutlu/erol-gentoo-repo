@@ -18,11 +18,9 @@ MY_P="${MY_PN}_${MY_PV}"
 
 SRC_URI="
 	x86? (
-		
 https://downloads.plex.tv/plex-media-server/${MY_PV}/${MY_P}_i386.deb
 	)
 	amd64? (
-		
 https://downloads.plex.tv/plex-media-server/${MY_PV}/${MY_P}_amd64.deb
 	)
 "
@@ -81,7 +79,6 @@ src_install() {
 }
 
 pkg_postinst() {
-        epatch "${FILESDIR}/0001-fix-TR-language-font-to-UTF-8.patch"
 	einfo "To start Plex Media Server, use the plexmediaserver init 
 script or systemd unit."
 	einfo "To manage your library and sign in to Plex, go to 
