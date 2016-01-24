@@ -19,7 +19,7 @@ S="${WORKDIR}"/${P}
 
 pkg_setup() {
 	webapp_pkg_setup
-	require_php_with_use pcre mysqli json
+	require_php_with_use mysqli json
 }
 
 src_install() {
