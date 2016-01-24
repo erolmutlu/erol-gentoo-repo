@@ -6,7 +6,7 @@ inherit webapp depend.php
 DESCRIPTION="osCommerce Online Merchant is an Open Source online shop e-commerce solution."
 HOMEPAGE="http://www.oscommerce.com/"
 P="${PN}-3.0.2"
-SRC_URI="http://www.oscommerce.com/ext/${P}.zip"
+SRC_URI="https://github.com/osCommerce/oscommerce/archive/v3.0.2.zip"
 
 LICENSE="GPL-2"
 KEYWORDS="~x86"
