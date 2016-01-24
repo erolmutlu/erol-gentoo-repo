@@ -11,8 +11,9 @@ SRC_URI="http://www.oscommerce.com/ext/${P}.zip"
 LICENSE="GPL-2"
 KEYWORDS="~x86"
 
-need_apache2_cgi
-need_php_apache2
+need_httpd_cgi
+need_php_httpd
+
 
 S="${WORKDIR}"/${P}
 
