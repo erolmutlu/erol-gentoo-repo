@@ -1,0 +1,11 @@
+# ChangeLog for media-plugins/vdr-streamdev
+# Copyright 1999-2015 Gentoo Foundation; Distributed under the GPL v2
+# $Id$
+
+*vdr-streamdev-0.6.1_p20151004 (15 Nov 2015)
+
+  15 Nov 2015; Joerg Bornkessel <hd_brummy@gentoo.org>
+  +vdr-streamdev-0.6.1_p20151004.ebuild, +files/confd-0.6.0,
+  +files/rc-addon-0.6.0.sh, +metadata.xml:
+  snapshot, compiles only on use-flag client with >=vdr-2.3.1
+
