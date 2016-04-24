@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+<herd>media-tv</herd>
+    <maintainer>
+		<email>hd_brummy@gentoo.org</email>
+		<name>Joerg Bornkessel</name>
+    </maintainer>
+	<use>
+		<flag name="protocol_camd33"> </flag>
+		<flag name="protocol_camd35"> </flag>
+		<flag name="protocol_camd35_tcp"> </flag>
+		<flag name="protocol_cccam"> </flag>
+		<flag name="protocol_cccshare"> </flag>
+		<flag name="protocol_constcw"> </flag>
+		<flag name="protocol_gbox"> </flag>
+		<flag name="protocol_ghttp"> </flag>
+		<flag name="protocol_newcamd"> </flag>
+		<flag name="protocol_pandora"> </flag>
+		<flag name="protocol_radegast"> </flag>
+		<flag name="protocol_serial"> </flag>
+		<flag name="reader_bulcrypt"> </flag>
+		<flag name="reader_conax"> </flag>
+		<flag name="reader_cryptoworks"> </flag>
+		<flag name="reader_dgcrypt"> </flag>
+		<flag name="reader_dre"> </flag>
+		<flag name="reader_griffin"> </flag>
+		<flag name="reader_irdeto"> </flag>
+		<flag name="reader_nagra"> </flag>
+		<flag name="reader_seca"> </flag>
+		<flag name="reader_tongfang"> </flag>
+		<flag name="reader_viaccess"> </flag>
+		<flag name="reader_videoguard"> </flag>
+		<flag name="cardreader_phoenix"> </flag>
+		<flag name="cardreader_internal"> </flag>
+		<flag name="cardreader_sc8in1"> </flag>
+		<flag name="cardreader_mp35"> </flag>
+		<flag name="cardreader_smargo"> </flag>
+		<flag name="cardreader_smartreader"> </flag>
+		<flag name="cardreader_db2com"> </flag>
+		<flag name="cardreader_stapi"> </flag>
+		<flag name="anticasc"> </flag>
+		<flag name="cacheex"> </flag>
+		<flag name="cw_cycle_check"> </flag>
+		<flag name="dvbapi"> </flag>
+		<flag name="irdeto_guessing"> </flag>
+		<flag name="lcd"> </flag>
+		<flag name="led"> </flag>
+		<flag name="loadbalancing"> </flag>
+		<flag name="monitor"> </flag>
+		<flag name="pcsc"> </flag>
+		<flag name="reader"> </flag>
+		<flag name="touch"> </flag>
+		<flag name="www"> </flag>
+	</use>
+</pkgmetadata>

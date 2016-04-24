@@ -1,0 +1,13 @@
+[Unit]
+Description=OsCAM Server
+After=network.target
+Before=vdr.service
+
+[Service]
+EnvironmentFile=/etc/conf.d/oscam
+ExecStart=/usr/bin/oscam $_OSCAM_OPTS
+PIDFile=/tmp/.oscam/oscam.pid
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
