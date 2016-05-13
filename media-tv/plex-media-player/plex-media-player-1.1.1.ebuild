@@ -4,16 +4,26 @@
 
 EAPI=5
 
-inherit git-r3 cmake-utils
+inherit eutils cmake-utils
 
 DESCRIPTION="next generation Plex client"
 HOMEPAGE="http://plex.tv/"
 
-EGIT_REPO_URI="https://github.com/plexinc/plex-media-player.git"
+BUILD="293"
+COMMIT="cc2cc067"
+WEBCLIENT_BUILD="132"
+WEBCLIENT_COMMIT="4cbcd79"
+MY_PV="${PV}.${BUILD}-${COMMIT}"
+MY_P="${PN}-${MY_PV}"
+
+SRC_URI="
+	https://github.com/plexinc/${PN}/archive/v${MY_PV}.tar.gz -> ${P}.tar.gz
+	https://nightlies.plex.tv/directdl/plex-dependencies/plex-web-client-plexmediaplayer/${WEBCLIENT_BUILD}/plex-web-client-konvergo-${WEBCLIENT_COMMIT}.cpp.tbz2
+"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64 ~x86"
 IUSE="cec joystick lirc"
 
 DEPEND="
@@ -44,7 +54,21 @@ RDEPEND="
 	)
 "
 
+PATCHES=( "${FILESDIR}"/git-revision.patch )
+
+S="${WORKDIR}/${MY_P}"
+
 CMAKE_IN_SOURCE_BUILD=1
+
+src_unpack() {
+	unpack "${P}".tar.gz
+}
+
+src_prepare() {
+	cp "${DISTDIR}"/plex-web-client-konvergo-"${WEBCLIENT_COMMIT}".cpp.tbz2 "${S}"/src
+
+	cmake-utils_src_prepare
+}
 
 src_configure() {
 	local mycmakeargs=(
@@ -53,6 +77,9 @@ src_configure() {
 		$(cmake-utils_use_enable lirc LIRC)
 		-DQTROOT=/usr
 	)
+
+	export BUILD_NUMBER="${BUILD}"
+	export GIT_REVISION="${COMMIT}"
 
 	cmake-utils_src_configure
 }
