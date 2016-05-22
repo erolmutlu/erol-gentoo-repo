@@ -20,11 +20,11 @@ IUSE=""
 
 DEPEND="
 	media-tv/kodi
-	media-libs/kodi-platform
+	media-libs/kodiplatform
 	dev-libs/tinyxml
 	"
 
 RDEPEND="
-	media-libs/kodi-platform
+	media-libs/kodiplatform
 	dev-libs/tinyxml
 	"
