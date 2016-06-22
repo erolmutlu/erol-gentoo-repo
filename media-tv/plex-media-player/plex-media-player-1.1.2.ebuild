@@ -32,6 +32,7 @@ DEPEND="
 	>=dev-qt/qtxml-5.6
 	>=dev-qt/qtwebchannel-5.6[qml]
 	>=dev-qt/qtwebengine-5.6
+	>=dev-qt/qtx11extras-5.6
 	>=media-video/mpv-0.11.0[libmpv]
 	virtual/opengl
 	x11-libs/libX11
