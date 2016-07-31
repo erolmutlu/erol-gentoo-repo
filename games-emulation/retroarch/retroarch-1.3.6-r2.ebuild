@@ -5,8 +5,18 @@
 EAPI=6
 
 PYTHON_COMPAT=( python{3_2,3_3,3_4,3_5} )
+# @ECLASS-VARIABLE: LIBRETRO_DATA_DIR
+# @DESCRIPTION:
+# Absolute path of the directory containing Libretro data files.
+LIBRETRO_DATA_DIR="${EROOT}usr/share/libretro"
 
-inherit flag-o-matic libretro python-single-r1
+# @ECLASS-VARIABLE: RETROARCH_DATA_DIR
+# @DESCRIPTION:
+# Absolute path of the directory containing Retroarch data files.
+RETROARCH_DATA_DIR="${EROOT}usr/share/retroarch"
+
+
+inherit flag-o-matic python-single-r1
 
 DESCRIPTION="Universal frontend for libretro-based emulators"
 HOMEPAGE="http://www.libretro.com/"
