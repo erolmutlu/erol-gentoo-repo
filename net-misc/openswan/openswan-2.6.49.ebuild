@@ -66,8 +66,8 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}"/${P}-gentoo.patch
-	use ms-bad-proposal && epatch "${FILESDIR}"/${PN}-${PV%.*}-allow-ms-bad-proposal.patch
+#	epatch "${FILESDIR}"/${P}-gentoo.patch
+#	use ms-bad-proposal && epatch "${FILESDIR}"/${PN}-${PV%.*}-allow-ms-bad-proposal.patch
 
 	find . -type f -regex '.*[.]\([1-8]\|html\|xml\)' -exec sed -i \
 	    -e s:/usr/local:/usr:g '{}' \; ||
