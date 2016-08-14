@@ -7,7 +7,7 @@ inherit eutils linux-info systemd user
 
 DESCRIPTION="IPsec-based VPN solution focused on security and ease of use, supporting IKEv1/IKEv2 and MOBIKE"
 HOMEPAGE="http://www.strongswan.org/"
-SRC_URI="http://download.strongswan.org/strongswan-5.5.1dr1.tar.bz2"
+SRC_URI="https://github.com/erolmutlu/erol-gentoo-repo/raw/master/distfiles/strongswan-5.5.1-r1.tar.bz2"
 
 LICENSE="GPL-2 RSA DES"
 SLOT="0"
