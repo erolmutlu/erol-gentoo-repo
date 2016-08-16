@@ -305,10 +305,10 @@ index 6c59fa7..71f8747 100644
  #include <nm-vpn-plugin-ui-interface.h>
  #include <nm-setting-vpn.h>
  #include <nm-setting-connection.h>
-+#include <nm-utils.h>
++#include <nma-ui-utils.h>
  #else
  #include <NetworkManager.h>
-+#include <nm-utils.h>
++#include <nma-ui-utils.h>
  #endif
  
  #include "nm-strongswan.h"
