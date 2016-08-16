@@ -18,14 +18,32 @@ KEYWORDS="~arm ~amd64 ~ppc ~x86"
 IUSE=""
 
 RDEPEND="
->=net-misc/networkmanager-0.9
->=net-misc/strongswan-5.1.0[networkmanager]"
+>=net-misc/networkmanager-1.2
+>=net-misc/strongswan-5.5.0[networkmanager]"
 
 DEPEND="${RDEPEND}
 dev-util/intltool
 dev-util/pkgconfig"
 
 S=${WORKDIR}/${MY_P}
+
+src_prepare() {
+
+epatch "${FILESDIR}/${PN}-0001.patch"
+epatch "${FILESDIR}/${PN}-0002.patch"
+epatch "${FILESDIR}/${PN}-0003.patch"
+epatch "${FILESDIR}/${PN}-0004.patch"
+epatch "${FILESDIR}/${PN}-0005.patch"
+epatch "${FILESDIR}/${PN}-0006.patch"
+epatch "${FILESDIR}/${PN}-0007.patch"
+epatch "${FILESDIR}/${PN}-0008.patch"
+epatch "${FILESDIR}/${PN}-0009.patch"
+epatch "${FILESDIR}/${PN}-0010.patch"
+epatch "${FILESDIR}/${PN}-0011.patch"
+epatch "${FILESDIR}/${PN}-0012.patch"
+epatch "${FILESDIR}/${PN}-0013.patch"
+
+}
 
 src_configure() {
 ECONF="--sysconfdir=/etc --prefix=/usr --libexecdir=/usr/libexec --with-charon=/usr/libexec/ipsec/charon-nm"

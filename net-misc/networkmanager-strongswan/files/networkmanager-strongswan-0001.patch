@@ -1,0 +1,33 @@
+From d12b24c02d94af2d017d48d84b246e27e270a431 Mon Sep 17 00:00:00 2001
+From: Lubomir Rintel <lkundrak@v3.sk>
+Date: Fri, 23 Oct 2015 11:29:42 +0200
+Subject: [PATCH 01/13] nm: install the .name file into
+ /usr/lib/NetworkManager/VPN
+
+It's a preferred location for system-provided plugins. We keep the old location
+for compatibility.
+---
+ Makefile.am | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile.am b/Makefile.am
+index 1184711..a826938 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -5,9 +5,12 @@ SUBDIRS = properties auth-dialog po
+ dbusservicedir = $(sysconfdir)/dbus-1/system.d
+ dbusservice_DATA = nm-strongswan-service.conf
+ 
+-nmvpnservicedir = $(sysconfdir)/NetworkManager/VPN
++nmvpnservicedir = $(prefix)/lib/NetworkManager/VPN
+ nmvpnservice_DATA = nm-strongswan-service.name
+ 
++oldnmvpnservicedir = $(sysconfdir)/NetworkManager/VPN
++oldnmvpnservice_DATA = $(nmvpnservice_DATA)
++
+ @INTLTOOL_DESKTOP_RULE@
+ 
+ nm-strongswan-service.name: $(srcdir)/nm-strongswan-service.name.in
+-- 
+2.5.0
+

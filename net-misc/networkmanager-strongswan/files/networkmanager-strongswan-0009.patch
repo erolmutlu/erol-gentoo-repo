@@ -1,0 +1,512 @@
+From cac9ea63d9dc0a55ac1d34a9dfb56243f8464648 Mon Sep 17 00:00:00 2001
+From: Lubomir Rintel <lkundrak@v3.sk>
+Date: Tue, 29 Mar 2016 20:07:04 +0200
+Subject: [PATCH 09/13] nm: add a widget for setting a password
+
+It was only possible to set the password from the authentication dialog,
+which is not ideal; as it requires a connection attempt.
+
+This adds an input entry along with a primary icon from libnma/libnm-gtk
+which allows selecting the backend and flags for the password (system, session
+agent, always ask or empty).
+---
+ configure.ac                       |   2 +
+ properties/Makefile.am             |   4 ++
+ properties/nm-strongswan-dialog.ui | 106 ++++++++++++++++++++++++--------
+ properties/nm-strongswan.c         | 121 ++++++++++++++++++++++++++++++++++++-
+ 4 files changed, 205 insertions(+), 28 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index bcacf90..63adc3d 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -46,6 +46,8 @@ PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.6)
+ PKG_CHECK_MODULES(LIBGNOMEUI, libgnomeui-2.0)
+ PKG_CHECK_MODULES(LIBSECRET, libsecret-1)
+ PKG_CHECK_MODULES(LIBNM_GLIB, NetworkManager >= 1.1.0 libnm-util libnm-glib libnm-glib-vpn)
++PKG_CHECK_MODULES(LIBNM_GTK, libnm-gtk >= 1.1.0)
++PKG_CHECK_MODULES(LIBNMA, libnma >= 1.1.0)
+ PKG_CHECK_MODULES(LIBNM, libnm >= 1.1.0)
+ LIBNM_CFLAGS="$LIBNM_CFLAGS -DNM_VERSION_MIN_REQUIRED=NM_VERSION_1_2"
+ LIBNM_CFLAGS="$LIBNM_CFLAGS -DNM_VERSION_MAX_ALLOWED=NM_VERSION_1_2"
+diff --git a/properties/Makefile.am b/properties/Makefile.am
+index 116e722..d652c13 100644
+--- a/properties/Makefile.am
++++ b/properties/Makefile.am
+@@ -20,19 +20,23 @@ common_CFLAGS = \
+ 
+ libnm_vpn_plugin_strongswan_la_CFLAGS = \
+ 	$(LIBNM_CFLAGS) \
++	$(LIBNMA_CFLAGS) \
+ 	$(common_CFLAGS)
+ 
+ libnm_strongswan_properties_la_CFLAGS = \
+ 	-DNM_STRONGSWAN_OLD \
++	$(LIBNM_GTK_CFLAGS) \
+ 	$(LIBNM_GLIB_CFLAGS) \
+ 	$(common_CFLAGS)
+ 
+ libnm_vpn_plugin_strongswan_la_LIBADD = \
+ 	$(GTK_LIBS) \
++	$(LIBNMA_LIBS) \
+ 	$(LIBNM_LIBS)
+ 
+ libnm_strongswan_properties_la_LIBADD = \
+ 	$(GTK_LIBS) \
++	$(LIBNM_GTK_LIBS) \
+ 	$(LIBNM_GLIB_LIBS)
+ 
+ libnm_vpn_plugin_strongswan_la_LDFLAGS = \
+diff --git a/properties/nm-strongswan-dialog.ui b/properties/nm-strongswan-dialog.ui
+index c90b645..9c73b60 100644
+--- a/properties/nm-strongswan-dialog.ui
++++ b/properties/nm-strongswan-dialog.ui
+@@ -1,6 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <interface>
+   <!-- interface-requires gtk+ 2.12 -->
++  <!-- interface-naming-policy toplevel-contextual -->
+   <object class="GtkWindow" id="strongswan-widget">
+     <property name="can_focus">False</property>
+     <property name="title" translatable="yes">window1</property>
+@@ -8,7 +9,6 @@
+       <object class="GtkVBox" id="strongswan-vbox">
+         <property name="visible">True</property>
+         <property name="can_focus">False</property>
+-        <property name="valign">start</property>
+         <property name="border_width">12</property>
+         <property name="spacing">16</property>
+         <child>
+@@ -54,7 +54,7 @@
+                       </object>
+                       <packing>
+                         <property name="x_options">GTK_FILL</property>
+-                        <property name="y_options"></property>
++                        <property name="y_options"/>
+                       </packing>
+                     </child>
+                     <child>
+@@ -63,11 +63,15 @@
+                         <property name="can_focus">True</property>
+                         <property name="has_tooltip">True</property>
+                         <property name="tooltip_text" translatable="yes">An IP address or hostname the Gateway can be contacted.</property>
++                        <property name="primary_icon_activatable">False</property>
++                        <property name="secondary_icon_activatable">False</property>
++                        <property name="primary_icon_sensitive">True</property>
++                        <property name="secondary_icon_sensitive">True</property>
+                       </object>
+                       <packing>
+                         <property name="left_attach">1</property>
+                         <property name="right_attach">2</property>
+-                        <property name="y_options"></property>
++                        <property name="y_options"/>
+                       </packing>
+                     </child>
+                     <child>
+@@ -83,7 +87,7 @@
+                         <property name="top_attach">1</property>
+                         <property name="bottom_attach">2</property>
+                         <property name="x_options">GTK_FILL</property>
+-                        <property name="y_options"></property>
++                        <property name="y_options"/>
+                       </packing>
+                     </child>
+                     <child>
+@@ -143,7 +147,7 @@
+                   <object class="GtkTable" id="client-table">
+                     <property name="visible">True</property>
+                     <property name="can_focus">False</property>
+-                    <property name="n_rows">4</property>
++                    <property name="n_rows">6</property>
+                     <property name="n_columns">2</property>
+                     <property name="column_spacing">6</property>
+                     <property name="row_spacing">6</property>
+@@ -156,8 +160,8 @@
+                       <packing>
+                         <property name="left_attach">1</property>
+                         <property name="right_attach">2</property>
+-                        <property name="top_attach">3</property>
+-                        <property name="bottom_attach">4</property>
++                        <property name="top_attach">2</property>
++                        <property name="bottom_attach">3</property>
+                       </packing>
+                     </child>
+                     <child>
+@@ -170,10 +174,10 @@
+                         <property name="mnemonic_widget">userkey-button</property>
+                       </object>
+                       <packing>
+-                        <property name="top_attach">3</property>
+-                        <property name="bottom_attach">4</property>
++                        <property name="top_attach">2</property>
++                        <property name="bottom_attach">3</property>
+                         <property name="x_options">GTK_FILL</property>
+-                        <property name="y_options"></property>
++                        <property name="y_options"/>
+                       </packing>
+                     </child>
+                     <child>
+@@ -186,7 +190,7 @@
+                       </object>
+                       <packing>
+                         <property name="x_options">GTK_FILL</property>
+-                        <property name="y_options"></property>
++                        <property name="y_options"/>
+                       </packing>
+                     </child>
+                     <child>
+@@ -199,10 +203,10 @@
+                         <property name="mnemonic_widget">user-entry</property>
+                       </object>
+                       <packing>
+-                        <property name="top_attach">1</property>
+-                        <property name="bottom_attach">2</property>
++                        <property name="top_attach">3</property>
++                        <property name="bottom_attach">4</property>
+                         <property name="x_options">GTK_FILL</property>
+-                        <property name="y_options"></property>
++                        <property name="y_options"/>
+                       </packing>
+                     </child>
+                     <child>
+@@ -211,13 +215,17 @@
+                         <property name="can_focus">True</property>
+                         <property name="has_tooltip">True</property>
+                         <property name="tooltip_text" translatable="yes">The username (identity) to use for authentication against the gateway.</property>
++                        <property name="primary_icon_activatable">False</property>
++                        <property name="secondary_icon_activatable">False</property>
++                        <property name="primary_icon_sensitive">True</property>
++                        <property name="secondary_icon_sensitive">True</property>
+                       </object>
+                       <packing>
+                         <property name="left_attach">1</property>
+                         <property name="right_attach">2</property>
+-                        <property name="top_attach">1</property>
+-                        <property name="bottom_attach">2</property>
+-                        <property name="y_options"></property>
++                        <property name="top_attach">3</property>
++                        <property name="bottom_attach">4</property>
++                        <property name="y_options"/>
+                       </packing>
+                     </child>
+                     <child>
+@@ -230,10 +238,10 @@
+                         <property name="mnemonic_widget">usercert-button</property>
+                       </object>
+                       <packing>
+-                        <property name="top_attach">2</property>
+-                        <property name="bottom_attach">3</property>
++                        <property name="top_attach">1</property>
++                        <property name="bottom_attach">2</property>
+                         <property name="x_options">GTK_FILL</property>
+-                        <property name="y_options"></property>
++                        <property name="y_options"/>
+                       </packing>
+                     </child>
+                     <child>
+@@ -245,8 +253,8 @@
+                       <packing>
+                         <property name="left_attach">1</property>
+                         <property name="right_attach">2</property>
+-                        <property name="top_attach">2</property>
+-                        <property name="bottom_attach">3</property>
++                        <property name="top_attach">1</property>
++                        <property name="bottom_attach">2</property>
+                       </packing>
+                     </child>
+                     <child>
+@@ -259,6 +267,57 @@
+                         <property name="right_attach">2</property>
+                       </packing>
+                     </child>
++                    <child>
++                      <object class="GtkLabel" id="passwd-label">
++                        <property name="visible">True</property>
++                        <property name="can_focus">False</property>
++                        <property name="xalign">0</property>
++                        <property name="label" translatable="yes">_Password:</property>
++                        <property name="use_underline">True</property>
++                        <property name="mnemonic_widget">user-entry</property>
++                      </object>
++                      <packing>
++                        <property name="top_attach">4</property>
++                        <property name="bottom_attach">5</property>
++                        <property name="x_options">GTK_FILL</property>
++                        <property name="y_options"/>
++                      </packing>
++                    </child>
++                    <child>
++                      <object class="GtkEntry" id="passwd-entry">
++                        <property name="visible">True</property>
++                        <property name="can_focus">True</property>
++                        <property name="has_tooltip">True</property>
++                        <property name="tooltip_text" translatable="yes">The username (identity) to use for authentication against the gateway.</property>
++                        <property name="visibility">False</property>
++                      </object>
++                      <packing>
++                        <property name="left_attach">1</property>
++                        <property name="right_attach">2</property>
++                        <property name="top_attach">4</property>
++                        <property name="bottom_attach">5</property>
++                        <property name="y_options"/>
++                      </packing>
++                    </child>
++                    <child>
++                      <object class="GtkCheckButton" id="passwd-show">
++                        <property name="label" translatable="yes">_Show password</property>
++                        <property name="visible">True</property>
++                        <property name="can_focus">True</property>
++                        <property name="receives_default">False</property>
++                        <property name="use_underline">True</property>
++                        <property name="draw_indicator">True</property>
++                      </object>
++                      <packing>
++                        <property name="left_attach">1</property>
++                        <property name="right_attach">2</property>
++                        <property name="top_attach">5</property>
++                        <property name="bottom_attach">6</property>
++                      </packing>
++                    </child>
++                    <child>
++                      <placeholder/>
++                    </child>
+                   </object>
+                 </child>
+               </object>
+@@ -311,7 +370,6 @@
+                         <property name="receives_default">False</property>
+                         <property name="has_tooltip">True</property>
+                         <property name="tooltip_text" translatable="yes">The Gateway may provide addresses from a pool to use for communication in the Gateways network. Check to request such an address.</property>
+-                        <property name="use_action_appearance">False</property>
+                         <property name="use_underline">True</property>
+                         <property name="draw_indicator">True</property>
+                       </object>
+@@ -329,7 +387,6 @@
+                         <property name="receives_default">False</property>
+                         <property name="has_tooltip">True</property>
+                         <property name="tooltip_text" translatable="yes">Some firewalls block ESP traffic. Enforcing UDP capsulation even if no NAT situation is detected might help in such cases.</property>
+-                        <property name="use_action_appearance">False</property>
+                         <property name="use_underline">True</property>
+                         <property name="draw_indicator">True</property>
+                       </object>
+@@ -347,7 +404,6 @@
+                         <property name="receives_default">False</property>
+                         <property name="has_tooltip">True</property>
+                         <property name="tooltip_text" translatable="yes">IPComp compresses raw IP packets before they get encrypted. This saves some bandwidth, but uses more processing power.</property>
+-                        <property name="use_action_appearance">False</property>
+                         <property name="use_underline">True</property>
+                         <property name="draw_indicator">True</property>
+                       </object>
+diff --git a/properties/nm-strongswan.c b/properties/nm-strongswan.c
+index 6c59fa7..71f8747 100644
+--- a/properties/nm-strongswan.c
++++ b/properties/nm-strongswan.c
+@@ -32,8 +32,10 @@
+ #include <nm-vpn-plugin-ui-interface.h>
+ #include <nm-setting-vpn.h>
+ #include <nm-setting-connection.h>
++#include <nm-ui-utils.h>
+ #else
+ #include <NetworkManager.h>
++#include <nma-ui-utils.h>
+ #endif
+ 
+ #include "nm-strongswan.h"
+@@ -142,12 +144,18 @@ static void update_layout (GtkWidget *widget, StrongswanPluginUiWidgetPrivate *p
+ 			gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (priv->builder, "userkey-button")));
+ 			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "user-label")));
+ 			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "user-entry")));
++			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-show")));
++			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-label")));
++			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-entry")));
+ 			break;
+ 		case 1:
+ 			gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (priv->builder, "usercert-label")));
+ 			gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (priv->builder, "usercert-button")));
+ 			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "user-label")));
+ 			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "user-entry")));
++			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-show")));
++			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-label")));
++			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-entry")));
+ 			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "userkey-label")));
+ 			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "userkey-button")));
+ 			break;
+@@ -156,6 +164,9 @@ static void update_layout (GtkWidget *widget, StrongswanPluginUiWidgetPrivate *p
+ 			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "usercert-button")));
+ 			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "user-label")));
+ 			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "user-entry")));
++			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-show")));
++			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-label")));
++			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-entry")));
+ 			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "userkey-label")));
+ 			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "userkey-button")));
+ 			break;
+@@ -163,6 +174,9 @@ static void update_layout (GtkWidget *widget, StrongswanPluginUiWidgetPrivate *p
+ 		case 4:
+ 			gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (priv->builder, "user-label")));
+ 			gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (priv->builder, "user-entry")));
++			gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-show")));
++			gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-label")));
++			gtk_widget_show (GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-entry")));
+ 			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "usercert-label")));
+ 			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "usercert-button")));
+ 			gtk_widget_hide (GTK_WIDGET (gtk_builder_get_object (priv->builder, "userkey-label")));
+@@ -185,6 +199,60 @@ settings_changed_cb (GtkWidget *widget, gpointer user_data)
+ 	g_signal_emit_by_name (STRONGSWAN_PLUGIN_UI_WIDGET (user_data), "changed");
+ }
+ 
++static void
++show_toggled_cb (GtkCheckButton *button, StrongswanPluginUiWidget *self)
++{
++	StrongswanPluginUiWidgetPrivate *priv = STRONGSWAN_PLUGIN_UI_WIDGET_GET_PRIVATE (self);
++	GtkWidget *widget;
++	gboolean visible;
++
++	visible = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
++
++	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-entry"));
++	gtk_entry_set_visibility (GTK_ENTRY (widget), visible);
++}
++
++static void
++password_storage_changed_cb (GObject *entry, GParamSpec *pspec, gpointer user_data)
++{
++	settings_changed_cb (NULL, STRONGSWAN_PLUGIN_UI_WIDGET (user_data));
++}
++
++static void
++init_password_icon (StrongswanPluginUiWidget *self, NMSettingVpn *settings,
++					const char *secret_key, const char *entry_name)
++{
++	StrongswanPluginUiWidgetPrivate *priv = STRONGSWAN_PLUGIN_UI_WIDGET_GET_PRIVATE (self);
++	GtkWidget *entry;
++	const char *value = NULL;
++	NMSettingSecretFlags pw_flags = NM_SETTING_SECRET_FLAG_NONE;
++
++	/* If there's already a password and the password type can't be found in
++	 * the VPN settings, default to saving it.  Otherwise, always ask for it.
++	 */
++	entry = GTK_WIDGET (gtk_builder_get_object (priv->builder, entry_name));
++
++	nma_utils_setup_password_storage (entry, 0, NM_SETTING (settings), secret_key, TRUE, FALSE);
++
++	/* If there's no password and no flags in the setting,
++	 * initialize flags as "always-ask".
++	 */
++	if (settings)
++	{
++		nm_setting_get_secret_flags (NM_SETTING (settings), secret_key, &pw_flags, NULL);
++	}
++
++	value = gtk_entry_get_text (GTK_ENTRY (entry));
++	if ((!value || !*value) && (pw_flags == NM_SETTING_SECRET_FLAG_NONE))
++	{
++		nma_utils_update_password_storage (entry, NM_SETTING_SECRET_FLAG_NOT_SAVED,
++										   NM_SETTING (settings), secret_key);
++	}
++
++	g_signal_connect (entry, "notify::secondary-icon-name",
++					  G_CALLBACK (password_storage_changed_cb), self);
++}
++
+ static gboolean
+ init_plugin_ui (StrongswanPluginUiWidget *self, NMConnection *connection, GError **error)
+ {
+@@ -215,6 +283,19 @@ init_plugin_ui (StrongswanPluginUiWidget *self, NMConnection *connection, GError
+ 		gtk_entry_set_text (GTK_ENTRY (widget), value);
+ 	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (settings_changed_cb), self);
+ 
++	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-show"));
++	gtk_widget_set_no_show_all (widget, TRUE);
++	g_signal_connect (G_OBJECT (widget), "toggled", G_CALLBACK (show_toggled_cb), self);
++	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-label"));
++	gtk_widget_set_no_show_all (widget, TRUE);
++	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-entry"));
++	gtk_widget_set_no_show_all (widget, TRUE);
++	value = nm_setting_vpn_get_secret (settings, "password");
++	if (value)
++		gtk_entry_set_text (GTK_ENTRY (widget), value);
++	g_signal_connect (G_OBJECT (widget), "changed", G_CALLBACK (settings_changed_cb), self);
++	init_password_icon (self, settings, "password", "passwd-entry");
++
+ 	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "method-combo"));
+ 	gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (widget), _("Certificate/private key"));
+ 	gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (widget), _("Certificate/ssh-agent"));
+@@ -300,6 +381,37 @@ get_widget (NMVpnEditor *iface)
+ 	return G_OBJECT (priv->widget);
+ }
+ 
++static void
++save_password_and_flags (NMSettingVpn *settings, GtkBuilder *builder,
++						 const char *entry_name, const char *secret_key)
++{
++	NMSettingSecretFlags flags;
++	const char *password;
++	GtkWidget *entry;
++
++	/* Get secret flags */
++	entry = GTK_WIDGET (gtk_builder_get_object (builder, entry_name));
++	flags = nma_utils_menu_to_secret_flags (entry);
++
++	/* Save password and convert flags to legacy data items */
++	switch (flags) {
++		case NM_SETTING_SECRET_FLAG_NONE:
++			/* FALL */
++		case NM_SETTING_SECRET_FLAG_AGENT_OWNED:
++			password = gtk_entry_get_text (GTK_ENTRY (entry));
++			if (password && strlen (password))
++			{
++				nm_setting_vpn_add_secret (settings, secret_key, password);
++			}
++			break;
++		default:
++			break;
++	}
++
++	/* Set new secret flags */
++	nm_setting_set_secret_flags (NM_SETTING (settings), secret_key, flags, NULL);
++}
++
+ static gboolean
+ update_connection (NMVpnEditor *iface,
+ 				   NMConnection *connection,
+@@ -365,6 +477,7 @@ update_connection (NMVpnEditor *iface,
+ 			if (str && strlen (str)) {
+ 				nm_setting_vpn_add_data_item (settings, "user", str);
+ 			}
++			save_password_and_flags (settings, priv->builder, "passwd-entry", "password");
+ 			str = "eap";
+ 			break;
+ 		case 4:
+@@ -373,6 +486,7 @@ update_connection (NMVpnEditor *iface,
+ 			if (str && strlen (str)) {
+ 				nm_setting_vpn_add_data_item (settings, "user", str);
+ 			}
++			save_password_and_flags (settings, priv->builder, "passwd-entry", "password");
+ 			str = "psk";
+ 			break;
+ 	}
+@@ -390,9 +504,6 @@ update_connection (NMVpnEditor *iface,
+ 	active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+ 	nm_setting_vpn_add_data_item (settings, "ipcomp", active ? "yes" : "no");
+ 
+-	nm_setting_set_secret_flags (NM_SETTING (settings), "password",
+-								 NM_SETTING_SECRET_FLAG_AGENT_OWNED, NULL);
+-
+ 	nm_connection_add_setting (connection, NM_SETTING (settings));
+ 	return TRUE;
+ }
+@@ -452,6 +563,10 @@ dispose (GObject *object)
+ {
+ 	StrongswanPluginUiWidget *plugin = STRONGSWAN_PLUGIN_UI_WIDGET (object);
+ 	StrongswanPluginUiWidgetPrivate *priv = STRONGSWAN_PLUGIN_UI_WIDGET_GET_PRIVATE (plugin);
++	GtkWidget *widget;
++
++	widget = GTK_WIDGET (gtk_builder_get_object (priv->builder, "passwd-entry"));
++	g_signal_handlers_disconnect_by_func (G_OBJECT (widget), G_CALLBACK (password_storage_changed_cb), plugin);
+ 
+ 	if (priv->widget)
+ 		g_object_unref (priv->widget);
+-- 
+2.5.0
+

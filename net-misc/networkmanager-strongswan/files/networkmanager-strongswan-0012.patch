@@ -1,0 +1,26 @@
+From f9d159a0d33d0423ce8acbb8c3536456aad96737 Mon Sep 17 00:00:00 2001
+From: Lubomir Rintel <lkundrak@v3.sk>
+Date: Wed, 21 Oct 2015 13:04:14 +0200
+Subject: [PATCH 12/13] nm: bump to GTK+ 3.0
+
+It's been released years ago; we depend on newer stuff than that now.
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 5819fde..4013e3a 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -42,7 +42,7 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [Gettext package])
+ IT_PROG_INTLTOOL([0.35])
+ AM_GLIB_GNU_GETTEXT
+ 
+-PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.6)
++PKG_CHECK_MODULES(GTK, gtk+-3.0 >= 3.0)
+ PKG_CHECK_MODULES(LIBSECRET, libsecret-1)
+ PKG_CHECK_MODULES(LIBNM_GLIB, NetworkManager >= 1.1.0 libnm-util libnm-glib libnm-glib-vpn)
+ PKG_CHECK_MODULES(LIBNM_GTK, libnm-gtk >= 1.1.0)
+-- 
+2.5.0
+
