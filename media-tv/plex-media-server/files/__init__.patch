@@ -1,7 +1,7 @@
-diff --git a/__init__.py b/__init__.py
+diff --git a/usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bundle/Contents/Code/__init__.py b/usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bundle/Contents/Code/__init__.py
 
----  a/__init__.py 
-+++  b/__init__.py 
+---  a/usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bundle/Contents/Code/__init__.py 
++++  b/usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bundle/Contents/Code/__init__.py
 @@ -203,7 +203,13 @@
           except:
             Log('Error when retrieving subtitle. Skipping')
