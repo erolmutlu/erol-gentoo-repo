@@ -1,0 +1,19 @@
+diff --git a/__init__.py b/__init__.py
+
+---  a/__init__.py 
++++  b/__init__.py 
+@@ -203,7 +203,13 @@
+          except:
+            Log('Error when retrieving subtitle. Skipping')
+            return None
+
+        if downloadQuota > 0:
+
+	   subData = Archive.GzipDecompress(subGz.content)
++          if l == "tur":
++            try:
++              subData = subData.decode("UTF-8")
++            except:
++              subData = subData.decode("ISO-8859-9")
++ 	     subData = subData.encode("UTF-8")
+--
