@@ -1,7 +1,6 @@
-diff --git a/usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bundle/Contents/Code/__init__.py b/usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bundle/Contents/Code/__init__.py
-
----  a/usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bundle/Contents/Code/__init__.py 
-+++  b/usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bundle/Contents/Code/__init__.py
+diff --git usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bundle/Contents/Code/__init__.py usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bundle/Contents/Code/__init__.py
+--- usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bundle/Contents/Code/__init__.py 
++++ usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bundle/Contents/Code/__init__.py
 @@ -203,7 +203,13 @@
           except:
             Log('Error when retrieving subtitle. Skipping')
@@ -16,4 +15,3 @@ diff --git a/usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bu
 +            except:
 +              subData = subData.decode("ISO-8859-9")
 + 	     subData = subData.encode("UTF-8")
---
