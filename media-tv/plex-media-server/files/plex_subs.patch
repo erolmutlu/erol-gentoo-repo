@@ -1,0 +1,20 @@
+diff --git usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bundle/Contents/Code/__init__.py usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bundle/Contents/Code/__init__.py
+--- usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bundle/Contents/Code/__init__.py
++++ usr/lib/plexmediaserver/Resources/Plug-ins-ba905d2/OpenSubtitles.bundle/Contents/Code/__init__.py
+@@ -206,9 +206,15 @@
+          except:
+            Log('Error when retrieving subtitle. Skipping')
+            return None
+
+        if downloadQuota > 0:
+
+	  subData = Archive.GzipDecompress(subGz.content)
++         if l == "tur":
++           try:
++             subData = subData.decode("UTF-8")
++           except:
++             subData = subData.decode("ISO-8859-9")
++ 	    subData = subData.encode("UTF-8")
+          part.subtitles[Locale.Language.Match(st['SubLanguageID'])][subUrl] = $
+          Log('Download quota: %d' % (downloadQuota))
+

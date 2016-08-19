@@ -48,7 +48,7 @@ pkg_setup() {
 
 src_prepare() {
 	epatch "${FILESDIR}/start_pms.patch"
-        epatch "${FILESDIR}/__init__.patch"
+        epatch "${FILESDIR}/plexex_subs.patch"
 
 	default
 }
