@@ -29,19 +29,19 @@ S=${WORKDIR}/${MY_P}
 
 src_prepare() {
 
-epatch "${FILESDIR}/${PN}-0001.patch"
-epatch "${FILESDIR}/${PN}-0002.patch"
-epatch "${FILESDIR}/${PN}-0003.patch"
-epatch "${FILESDIR}/${PN}-0004.patch"
-epatch "${FILESDIR}/${PN}-0005.patch"
-epatch "${FILESDIR}/${PN}-0006.patch"
-epatch "${FILESDIR}/${PN}-0007.patch"
-epatch "${FILESDIR}/${PN}-0008.patch"
-epatch "${FILESDIR}/${PN}-0009.patch"
-epatch "${FILESDIR}/${PN}-0010.patch"
-epatch "${FILESDIR}/${PN}-0011.patch"
-epatch "${FILESDIR}/${PN}-0012.patch"
-epatch "${FILESDIR}/${PN}-0013.patch"
+#epatch "${FILESDIR}/${PN}-0001.patch"
+#epatch "${FILESDIR}/${PN}-0002.patch"
+#epatch "${FILESDIR}/${PN}-0003.patch"
+#epatch "${FILESDIR}/${PN}-0004.patch"
+#epatch "${FILESDIR}/${PN}-0005.patch"
+#epatch "${FILESDIR}/${PN}-0006.patch"
+#epatch "${FILESDIR}/${PN}-0007.patch"
+#epatch "${FILESDIR}/${PN}-0008.patch"
+#epatch "${FILESDIR}/${PN}-0009.patch"
+#epatch "${FILESDIR}/${PN}-0010.patch"
+#epatch "${FILESDIR}/${PN}-0011.patch"
+#epatch "${FILESDIR}/${PN}-0012.patch"
+#epatch "${FILESDIR}/${PN}-0013.patch"
 epatch "${FILESDIR}/${PN}-0014.patch"
 
 }
