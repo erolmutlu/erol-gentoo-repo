@@ -27,8 +27,9 @@ dev-util/pkgconfig"
 
 S=${WORKDIR}/${MY_P}
 
-#src_prepare() {
+src_prepare() {
 
+./autogen.sh
 #epatch "${FILESDIR}/${PN}-0001.patch"
 #epatch "${FILESDIR}/${PN}-0002.patch"
 #epatch "${FILESDIR}/${PN}-0003.patch"
@@ -44,7 +45,7 @@ S=${WORKDIR}/${MY_P}
 #epatch "${FILESDIR}/${PN}-0013.patch"
 #epatch "${FILESDIR}/${PN}-0014.patch"
 
-#}
+}
 
 src_configure() {
 ECONF="--sysconfdir=/etc --prefix=/usr --libexecdir=/usr/libexec --with-charon=/usr/libexec/strongswan/charon-nm"
