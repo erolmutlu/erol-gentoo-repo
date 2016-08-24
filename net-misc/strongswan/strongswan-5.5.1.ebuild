@@ -97,6 +97,7 @@ pkg_setup() {
 }
 
 src_prepare() {
+./autogen.sh
 	epatch_user
 }
 
