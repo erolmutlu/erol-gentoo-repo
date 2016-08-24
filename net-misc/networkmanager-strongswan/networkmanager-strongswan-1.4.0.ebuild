@@ -10,7 +10,7 @@ MYPV_MINOR=$(get_version_component_range 1-2)
 
 DESCRIPTION="NetworkManager StrongSwan plugin."
 HOMEPAGE="http://www.strongswan.org/"
-SRC_URI="http://download.strongswan.org/NetworkManager/${MY_P}.tar.bz2"
+SRC_URI="https://github.com/erolmutlu/erol-gentoo-repo/raw/master/distfiles/${MY_P}.tar.bz2"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -42,11 +42,12 @@ epatch "${FILESDIR}/${PN}-0010.patch"
 epatch "${FILESDIR}/${PN}-0011.patch"
 epatch "${FILESDIR}/${PN}-0012.patch"
 epatch "${FILESDIR}/${PN}-0013.patch"
+epatch "${FILESDIR}/${PN}-0014.patch"
 
 }
 
 src_configure() {
-ECONF="--sysconfdir=/etc --prefix=/usr --libexecdir=/usr/libexec --with-charon=/usr/libexec/ipsec/charon-nm"
+ECONF="--sysconfdir=/etc --prefix=/usr --libexecdir=/usr/libexec --with-charon=/usr/libexec/strongswan/charon-nm"
 
 econf ${ECONF}
 }
