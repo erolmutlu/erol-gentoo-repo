@@ -27,7 +27,7 @@ dev-util/pkgconfig"
 
 S=${WORKDIR}/${MY_P}
 
-src_prepare() {
+#src_prepare() {
 
 #epatch "${FILESDIR}/${PN}-0001.patch"
 #epatch "${FILESDIR}/${PN}-0002.patch"
@@ -42,9 +42,9 @@ src_prepare() {
 #epatch "${FILESDIR}/${PN}-0011.patch"
 #epatch "${FILESDIR}/${PN}-0012.patch"
 #epatch "${FILESDIR}/${PN}-0013.patch"
-epatch "${FILESDIR}/${PN}-0014.patch"
+#epatch "${FILESDIR}/${PN}-0014.patch"
 
-}
+#}
 
 src_configure() {
 ECONF="--sysconfdir=/etc --prefix=/usr --libexecdir=/usr/libexec --with-charon=/usr/libexec/strongswan/charon-nm"
