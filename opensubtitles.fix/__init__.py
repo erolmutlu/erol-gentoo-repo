@@ -121,7 +121,7 @@ def fetchSubtitles(proxy, token, part, imdbID=None, filename=None, season=None, 
       except:
         subtitleResponse = False
 
-    if subtitleResponse == False and imdbID: # Let's try the imdbID, if we have one
+    if not subtitleResponse and imdbID:  # Let's try the imdbID, if we have one
 
       Log('Found nothing via hash, trying search with imdbID: %s' % (imdbID))
       try:
@@ -130,7 +130,7 @@ def fetchSubtitles(proxy, token, part, imdbID=None, filename=None, season=None, 
       except:
         subtitleResponse = False
 
-    if subtitleResponse == False and filename and season and episode: # TV
+    if not subtitleResponse and filename and season and episode: # TV
 
       Log('Found nothing via hash, trying search with filename/season/episode: %s, %s, %s' % (filename, season, episode))
       try:
@@ -142,9 +142,9 @@ def fetchSubtitles(proxy, token, part, imdbID=None, filename=None, season=None, 
       except:
         subtitleResponse = False
 
-    if subtitleResponse not in [None, False, '']:
+    if subtitleResponse:
 
-      for st in subtitleResponse: # Remove any subtitle formats we don't recognize
+      for st in subtitleResponse:  # Remove any subtitle formats we don't recognize
 
         if st['SubFormat'] not in SUBTITLE_EXT:
           Log('Removing a subtitle of type: %s' % (st['SubFormat']))
@@ -154,7 +154,7 @@ def fetchSubtitles(proxy, token, part, imdbID=None, filename=None, season=None, 
         Log('No valid subtitles. Skipping.')
         continue
 
-      st = sorted(subtitleResponse, key=lambda k: int(k['SubDownloadsCnt']), reverse=True) # Sort by 'most downloaded' subtitle file for current language
+      st = sorted(subtitleResponse, key=lambda k: int(k['SubDownloadsCnt']), reverse=True)  # Sort by 'most downloaded' subtitle file for current language
 
       filename = os.path.split(part.file)[1]
       lastScore = float(0.0)
@@ -210,12 +210,6 @@ def fetchSubtitles(proxy, token, part, imdbID=None, filename=None, season=None, 
         if downloadQuota > 0:
 
           subData = Archive.GzipDecompress(subGz.content)
-          if l == "tur":
-            try:
-              subData = subData.decode("UTF-8")
-            except:
-              subData = subData.decode("ISO-8859-9")
-            subData = subData.encode("UTF-8")
           part.subtitles[Locale.Language.Match(st['SubLanguageID'])][subUrl] = Proxy.Media(subData, ext=st['SubFormat'])
           Log('Download quota: %d' % (downloadQuota))
 
