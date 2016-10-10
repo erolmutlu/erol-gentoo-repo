@@ -15,7 +15,7 @@ BINPACK="BricsCAD-V16.2.14-2-en_US-amd64.deb"
 
 SRC_URI="
 	amd64? (
-		https://github.com/erolmutlu/erol-gentoo-repo/raw/master/distfiles/${BINPACK}
+		https://www.erolmutlu.com/${BINPACK}
 	)
 "
 
@@ -41,8 +41,11 @@ pkg_setup() {
 	einfo "Then move ${BINPACK} to your ${DISTDIR}"
 }
 
-src_prepare() {
-	default
+
+src_unpack() {
+	unpack $A
+	unpack ./data.tar.xz
+	cd ./usr
 }
 
 src_install() {
