@@ -44,7 +44,7 @@ pkg_setup() {
 
 src_unpack() {
 	unpack $A
-	unpack ./data.tar.xz
+	unpack ./data.tar.gz
 	cd ./usr
 }
 
