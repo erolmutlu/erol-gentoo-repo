@@ -15,7 +15,7 @@ BINPACK="BricsCAD-V16.2.14-2-en_US-amd64.deb"
 
 SRC_URI="
 	amd64? (
-		https://www.erolmutlu.com/${BINPACK}
+		http://www.erolmutlu.com/${BINPACK}
 	)
 "
 
