@@ -1,5 +1,5 @@
-diff --git usr/lib/plexmediaserver/Resources/Plug-ins-b38628e/OpenSubtitles.bundle/Contents/Code/__init__.py usr/lib/plexmediaserver/Resources/Plug-ins-b38628e/OpenSubtitles.bundle/Contents/Code/__init__.py
---- usr/lib/plexmediaserver/Resources/Plug-ins-b38628e/OpenSubtitles.bundle/Contents/Code/__init__.py
+diff --git usr/lib/plexmediaserver/Resources/Plug-ins-b46e0ea/OpenSubtitles.bundle/Contents/Code/__init__.py usr/lib/plexmediaserver/Resources/Plug-ins-b46e0ea/OpenSubtitles.bundle/Contents/Code/__init__.py
+--- usr/lib/plexmediaserver/Resources/Plug-ins-b46e0ea/OpenSubtitles.bundle/Contents/Code/__init__.py
 +++ usr/lib/plexmediaserver/Resources/Plug-ins-b38628e/OpenSubtitles.bundle/Contents/Code/__init__.py
 @@ -210,6 +210,12 @@ def fetchSubtitles(proxy, token, part, imdbID=None, filename=None, season=None,
          if downloadQuota > 0:
