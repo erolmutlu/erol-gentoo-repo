@@ -15,13 +15,12 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="doc test"
 
-RDEPEND=">=dev-ml/ocurl-0.5.3:=
-	>=dev-ml/ocamlnet-3.12:=
+RDEPEND=">=dev-lang/ocaml-3.12:=
 	>=dev-ml/cryptokit-1.3.14:=
 	>=dev-ml/extlib-1.5.1:=
 	dev-ml/yojson
 	dev-ml/xmlm
-	>=dev-ml/gapi-ocaml-0.3.3
+	>=dev-ml/gapi-ocaml-0.2.14
 	dev-ml/ocamlfuse
 	dev-ml/ocaml-sqlite3"
 DEPEND="${RDEPEND}
