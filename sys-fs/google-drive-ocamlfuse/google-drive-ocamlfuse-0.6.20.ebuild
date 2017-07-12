@@ -21,7 +21,7 @@ RDEPEND=">=dev-ml/ocurl-0.5.3:=
 	>=dev-ml/extlib-1.5.1:=
 	dev-ml/yojson
 	dev-ml/xmlm
-	>=dev-ml/gapi-ocaml-0.2.14
+	>=dev-ml/gapi-ocaml-0.3.3
 	dev-ml/ocamlfuse
 	dev-ml/ocaml-sqlite3"
 DEPEND="${RDEPEND}
