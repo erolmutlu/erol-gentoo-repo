@@ -9,7 +9,7 @@ Subject: [PATCH] Fix cabd_test.c test and msdecompile_md5 script
  libmspack/test/msdecompile_md5 | 47 +++++++++++++++++++++---------------------
  3 files changed, 36 insertions(+), 24 deletions(-)
 
-diff --git a/libmspack/ChangeLog b/libmspack/ChangeLog
+diff --git a/ChangeLog b/ChangeLog
 index 6861b19..4aef85f 100644
 --- a/ChangeLog
 +++ b/ChangeLog
@@ -27,7 +27,7 @@ index 6861b19..4aef85f 100644
  2017-08-13  Stuart Caie <kyzer@cabextract.org.uk>
  
  	* src/chmextract.c: support MinGW one-arg mkdir(). Thanks to AntumDeluge
-diff --git a/libmspack/test/cabd_test.c b/libmspack/test/cabd_test.c
+diff --git a/test/cabd_test.c b/test/cabd_test.c
 index 5e8851c..abed65c 100644
 --- a/test/cabd_test.c
 +++ b/test/cabd_test.c
@@ -41,7 +41,7 @@ index 5e8851c..abed65c 100644
    }
  
    /* lack of data blocks should NOT be a problem for merely reading */
-diff --git a/libmspack/test/msdecompile_md5 b/libmspack/test/msdecompile_md5
+diff --git a/test/msdecompile_md5 b/test/msdecompile_md5
 index a1d3b4b..9efbfac 100755
 --- a/test/msdecompile_md5
 +++ b/test/msdecompile_md5
