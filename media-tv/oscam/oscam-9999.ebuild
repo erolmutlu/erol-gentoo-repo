@@ -15,7 +15,7 @@ inherit cmake-utils systemd
 
 if [ "${OSCAM_VCS}" == "svn" ] ; then
 	inherit subversion
-	ESVN_REPO_URI="${OSCAM_ESVN_REPO_URI:-http://streamboard.de.vu/svn/oscam/trunk}"
+	ESVN_REPO_URI="${OSCAM_ESVN_REPO_URI:-http://streamboard.tv/svn/oscam/trunk}"
 else
 	inherit git-2
 	EGIT_REPO_URI="${OSCAM_EGIT_REPO_URI:-git://github.com/gfto/oscam.git}"
