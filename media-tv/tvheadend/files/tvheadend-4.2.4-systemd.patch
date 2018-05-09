@@ -1,0 +1,11 @@
+--- tvheadend-4.2.4/configure	2017-12-10 09:31:35.043656350 +0100
++++ tvheadend-4.2.4/configure	2017-12-10 09:31:41.900584422 +0100
+@@ -674,7 +674,7 @@
+ # systemd
+ #
+ if enabled_or_auto libsystemd_daemon; then
+-  if check_pkg libsystemd-daemon; then
++  if check_pkg libsystemd; then
+     enable libsystemd_daemon
+   elif enabled libsystemd_daemon; then
+     die "libsystemd-daemon development support not found (use --disable-systemd_daemon)"
