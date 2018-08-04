@@ -1,6 +1,6 @@
 diff -purN a/intern/audaspace/ffmpeg/AUD_FFMPEGReader.cpp b/intern/audaspace/ffmpeg/AUD_FFMPEGReader.cpp
---- intern/audaspace/ffmpeg/AUD_FFMPEGReader.cpp
-+++ intern/audaspace/ffmpeg/AUD_FFMPEGReader.cpp
+--- a/intern/audaspace/ffmpeg/AUD_FFMPEGReader.cpp
++++ b/intern/audaspace/ffmpeg/AUD_FFMPEGReader.cpp
 @@ -264,9 +264,9 @@
  		m_membuffer(buffer),
  		m_membufferpos(0)
@@ -14,8 +14,8 @@ diff -purN a/intern/audaspace/ffmpeg/AUD_FFMPEGReader.cpp b/intern/audaspace/ffm
  
  	if(!m_aviocontext)
 diff -purN a/intern/audaspace/ffmpeg/AUD_FFMPEGWriter.cpp b/intern/audaspace/ffmpeg/AUD_FFMPEGWriter.cpp
---- intern/audaspace/ffmpeg/AUD_FFMPEGWriter.cpp
-+++ intern/audaspace/ffmpeg/AUD_FFMPEGWriter.cpp
+--- a/intern/audaspace/ffmpeg/AUD_FFMPEGWriter.cpp
++++ b/intern/audaspace/ffmpeg/AUD_FFMPEGWriter.cpp
 @@ -163,7 +163,7 @@
  		try
  		{
@@ -40,8 +40,8 @@ diff -purN a/intern/audaspace/ffmpeg/AUD_FFMPEGWriter.cpp b/intern/audaspace/ffm
  			}
  			else
 diff -purN a/source/blender/blenkernel/intern/writeffmpeg.c b/source/blender/blenkernel/intern/writeffmpeg.c
---- source/blender/blenkernel/intern/writeffmpeg.c
-+++ source/blender/blenkernel/intern/writeffmpeg.c
+--- a/source/blender/blenkernel/intern/writeffmpeg.c
++++ b/source/blender/blenkernel/intern/writeffmpeg.c
 @@ -619,8 +619,6 @@
  	c->rc_buffer_aggressivity = 1.0;
  #endif
@@ -96,8 +96,8 @@ diff -purN a/source/blender/blenkernel/intern/writeffmpeg.c b/source/blender/ble
  		context->audio_input_samples = c->frame_size;
  #ifndef FFMPEG_HAVE_ENCODE_AUDIO2
 diff -purN a/source/blender/imbuf/intern/indexer.c b/source/blender/imbuf/intern/indexer.c
---- source/blender/imbuf/intern/indexer.c
-+++ source/blender/imbuf/intern/indexer.c
+--- a/source/blender/imbuf/intern/indexer.c
++++ b/source/blender/imbuf/intern/indexer.c
 @@ -537,7 +537,7 @@
  	av_opt_set_int(rv->c, "qmax", ffmpeg_quality, 0);
  
