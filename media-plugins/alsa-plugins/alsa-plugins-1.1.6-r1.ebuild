@@ -31,8 +31,7 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-1.1.5-optional_plugins.patch"
-        "${FILESDIR}/${PN}-1.1.6.patch"
+	"${FILESDIR}/${PN}-1.1.6-ffmpeg-4.0.patch"
 )
 
 src_prepare() {
@@ -54,7 +53,7 @@ multilib_src_configure() {
 	local myeconfargs=(
 		--with-speex="$(usex speex lib no)"
 		$(use_enable arcam_av arcamav)
-		$(use_enable ffmpeg avcodec)
+		$(use_enable ffmpeg libav)
 		$(use_enable jack)
 		$(use_enable libsamplerate samplerate)
 		$(use_enable mix)
@@ -73,7 +72,7 @@ multilib_src_install_all() {
 	dodoc upmix.txt vdownmix.txt README-pcm-oss
 	use jack && dodoc README-jack
 	use libsamplerate && dodoc samplerate.txt
-	use ffmpeg && dodoc lavcrate.txt a52.txt
+	use ffmpeg && dodoc lavrate.txt a52.txt
 
 	if use pulseaudio; then
 		dodoc README-pulse
