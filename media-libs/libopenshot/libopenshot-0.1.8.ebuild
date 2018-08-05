@@ -38,7 +38,7 @@ DEPEND="
 "
 
 # https://github.com/OpenShot/libopenshot/pull/45
-#PATCHES=( ${FILESDIR}/${PN}-0.1.3-fix-tests.patch )
+PATCHES=( ${FILESDIR}/${PN}-0.1.8-fix-ffmpeg4.patch )
 
 pkg_pretend() {
 	if [[ ${MERGE_TYPE} != binary ]] && ! tc-has-openmp; then
