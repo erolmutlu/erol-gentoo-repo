@@ -36,6 +36,8 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	sys-devel/automake:1.11"
 
+PATCHES=( ${FILESDIR}/${PN}.patch ) 
+
 src_prepare() {
 	base_src_prepare
 	eautoreconf
