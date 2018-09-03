@@ -58,6 +58,5 @@ src_compile() {
 
 src_install() {
 	default
-	dotnet_multilib_comply
 	sed -i "s/\\r//g" "${D}"/usr/bin/* || die "sed failed"
 }
