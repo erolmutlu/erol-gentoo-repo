@@ -37,7 +37,7 @@ DEPEND="${RDEPEND}
 	sys-devel/automake:1.11"
 
 src_prepare() {
-	PATCHES=( ${FILESDIR}/gtk-sharp.patch ) 
+	epatch "${FILESDIR}/gtk-sharp.patch"
 	base_src_prepare
 	eautoreconf
 	libtoolize
