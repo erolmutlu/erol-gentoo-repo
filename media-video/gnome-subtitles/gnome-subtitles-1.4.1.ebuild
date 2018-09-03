@@ -17,15 +17,11 @@ IUSE=""
 KEYWORDS="~amd64 ~ppc ~x86"
 
 RDEPEND="
-	>=dev-lang/mono-1.1
-	|| ( (
-		>=dev-dotnet/glade-sharp-2.12
-		>=dev-dotnet/gtk-sharp-2.12
-		>=dev-dotnet/gconf-sharp-2.12 )
-	>=dev-dotnet/gtk-sharp-2.12.21 )
+	>=dev-lang/mono-4.0
+	>=dev-dotnet/gtk-sharp-2.99.2
 	media-libs/gstreamer:1.0
-	>=app-text/gtkspell-2.0:2
-	>=app-text/enchant-1.3
+	>=app-text/gtkspell-3.0
+	>=app-text/enchant-1.6
 	media-libs/gst-plugins-base:1.0
 "
 DEPEND="${RDEPEND}
