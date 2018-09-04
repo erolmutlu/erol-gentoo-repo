@@ -94,6 +94,7 @@ src_prepare() {
 	use pulseaudio	&& PATCHES+=( "${FILESDIR}/${PN}-2.6.14-optional-pulse.patch" )
 	use opus		&& PATCHES+=( "${FILESDIR}/${PN}-2.6.14-opus_check.patch" )
 	use nvenc		&& PATCHES+=( "${FILESDIR}/${PN}-2.6.14-fix_nvenc_check.patch" )
+	use qt5               && PATCHES+=( "${FILESDIR}/${P}-qt-5.11.patch" )
 	default
 }
 
