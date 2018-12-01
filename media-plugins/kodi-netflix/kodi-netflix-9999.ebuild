@@ -31,8 +31,8 @@ RDEPEND="
 	>=media-tv/kodi-9999
 	media-plugins/kodi-inputstream-adaptive
 	media-plugins/kodi-widevine
-	<dev-python/pycparser-2.18
-	dev-python/pycryptodomex[python_targets_python2_7]
+	dev-python/pycparser
+	dev-python/pycryptodome[python_targets_python2_7]
 "
 
 src_compile() {
