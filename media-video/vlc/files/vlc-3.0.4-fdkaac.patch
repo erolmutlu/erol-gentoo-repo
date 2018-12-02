@@ -1,28 +1,30 @@
 --- a/modules/codec/fdkaac.c
 +++ a/modules/codec/fdkaac.c
-@@ -136,6 +136,6 @@ typedef struct
-    double d_compression_ratio;
-    vlc_tick_t i_pts_last;
+@@ -135,7 +135,7 @@ typedef struct
+ {
+     double d_compression_ratio;
+     vlc_tick_t i_pts_last;
 -    int i_encoderdelay; /* Samples delay introduced by the profile */
 +    int i_nDelay; /* Samples delay introduced by the profile */
-    int i_frame_size;
-    int i_maxoutputsize; /* Maximum buffer size for encoded output */
-    HANDLE_AACENCODER handle;
+     int i_frame_size;
+     int i_maxoutputsize; /* Maximum buffer size for encoded output */
+     HANDLE_AACENCODER handle;
 @@ -288,7 +288,7 @@ static int OpenEncoder(vlc_object_t *p_this)
-    p_sys->i_maxoutputsize = 768*p_enc->fmt_in.audio.i_channels;
-    p_enc->fmt_in.audio.i_bitspersample = 16;
-    p_sys->i_frame_size = info.frameLength;
+     p_sys->i_maxoutputsize = 768*p_enc->fmt_in.audio.i_channels;
+     p_enc->fmt_in.audio.i_bitspersample = 16;
+     p_sys->i_frame_size = info.frameLength;
 -    p_sys->i_encoderdelay = info.encoderDelay;
 +    p_sys->i_nDelay = info.nDelay;
-    p_enc->fmt_out.i_extra = info.confSize;
-    if (p_enc->fmt_out.i_extra) {
+ 
+     p_enc->fmt_out.i_extra = info.confSize;
+     if (p_enc->fmt_out.i_extra) {
 @@ -328,7 +328,7 @@ static block_t *EncodeAudio(encoder_t *p_enc, block_t *p_aout_buf)
-    if (likely(p_aout_buf)) {
-        p_buffer = (int16_t *)p_aout_buf->p_buffer;
-        i_samples = p_aout_buf->i_nb_samples;
+     if (likely(p_aout_buf)) {
+         p_buffer = (int16_t *)p_aout_buf->p_buffer;
+         i_samples = p_aout_buf->i_nb_samples;
 -        i_pts_out = p_aout_buf->i_pts - vlc_tick_from_samples(p_sys->i_encoderdelay,
 +        i_pts_out = p_aout_buf->i_pts - vlc_tick_from_samples(p_sys->i_nDelay,
-                                                   p_enc->fmt_out.audio.i_rate);
-        if (p_sys->i_pts_last == 0)
-            p_sys->i_pts_last = i_pts_out - vlc_tick_from_samples(p_sys->i_frame_size,
+                                                    p_enc->fmt_out.audio.i_rate);
+         if (p_sys->i_pts_last == 0)
+             p_sys->i_pts_last = i_pts_out - vlc_tick_from_samples(p_sys->i_frame_size,
 
