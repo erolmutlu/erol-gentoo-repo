@@ -44,10 +44,10 @@ REQUIRED_USE="dvbcsa? ( || ( capmt constcw cwc dvben50221 ) )"
 # https://github.com/rpmfusion/tvheadend
 
 PATCHES=(
-	"${FILESDIR}/${PN}-4.0.9-use_system_queue.patch"
-	"${FILESDIR}/${PN}-4.2.1-hdhomerun.patch"
-	"${FILESDIR}/${PN}-4.2.2-dtv_scan_tables.patch"
-        "${FILESDIR}/${PN}-4.2.4-systemd.patch"
+	#${FILESDIR}/${PN}-4.0.9-use_system_queue.patch"
+	#${FILESDIR}/${PN}-4.2.1-hdhomerun.patch"
+	#${FILESDIR}/${PN}-4.2.2-dtv_scan_tables.patch"
+        #${FILESDIR}/${PN}-4.2.4-systemd.patch"
 )
 
 DOCS=( README.md )
