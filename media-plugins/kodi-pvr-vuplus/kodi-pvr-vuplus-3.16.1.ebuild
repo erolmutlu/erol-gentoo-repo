@@ -31,6 +31,7 @@ DEPEND="
 	=media-tv/kodi-18*
 	=media-libs/kodi-platform-18*
 	dev-libs/tinyxml
+	dev-libs/nlohmann-json
 	"
 
 RDEPEND="
