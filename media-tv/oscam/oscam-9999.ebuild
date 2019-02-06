@@ -18,7 +18,7 @@ if [ "${OSCAM_VCS}" == "svn" ] ; then
 	ESVN_REPO_URI="${OSCAM_ESVN_REPO_URI:-http://streamboard.tv/svn/oscam/trunk}"
 else
 	inherit git-2
-	EGIT_REPO_URI="${OSCAM_EGIT_REPO_URI:-git://github.com/gfto/oscam.git}"
+	EGIT_REPO_URI="${OSCAM_EGIT_REPO_URI:-git://github.com/nx111/oscam.git}"
 fi
 
 DESCRIPTION="OSCam is an Open Source Conditional Access Module software"
