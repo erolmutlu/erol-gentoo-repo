@@ -9,10 +9,10 @@ DESCRIPTION="Next generation Plex Desktop/Embedded Client"
 HOMEPAGE="http://plex.tv/"
 
 # To change on every release bump:
-COMMIT=""
+COMMIT="542ba3ed"
 WEB_CLIENT_BUILD_ID="99-ed0f3670043312"
-WEB_CLIENT_DESKTOP_VERSION=""
-WEB_CLIENT_TV_VERSION=""
+WEB_CLIENT_DESKTOP_VERSION="3.83.1-0043312"
+WEB_CLIENT_TV_VERSION="3.86.1-ed0f367"
 
 MY_PV="${PV}-${COMMIT}"
 MY_P="${PN}-${MY_PV}"
@@ -148,3 +148,4 @@ pkg_postinst() {
 pkg_postrm() {
 	gnome2_icon_cache_update
 }
+
