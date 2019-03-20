@@ -35,9 +35,12 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	sys-devel/automake:1.11"
+PATCHES=(
+	"${FILESDIR}/gtk-sharp.patch"
+)
 
 src_prepare() {
-	epatch "${FILESDIR}/gtk-sharp.patch"
+	#epatch ${FILESDIR}/gtk-sharp.patch
 	base_src_prepare
 	eautoreconf
 	libtoolize
