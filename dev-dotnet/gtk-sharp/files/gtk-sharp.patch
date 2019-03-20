@@ -2,7 +2,7 @@ diff --git a/gtk/gui-thread-check/profiler/gui-thread-check.c b/gtk/gui-thread-c
 --- a/gtk/gui-thread-check/profiler/gui-thread-check.c
 --- b/gtk/gui-thread-check/profiler/gui-thread-check.c
 
-@@ -86,6 +86,10 @@ simple_method_enter (MonoProfiler *prof, MonoMethod *method)
+@@ -86,6 +86,10 @@
 	}
 }
 
