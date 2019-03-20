@@ -35,12 +35,9 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	virtual/pkgconfig
 	sys-devel/automake:1.11"
-PATCHES=(
-	"${FILESDIR}/gtk-sharp.patch"
-)
 
 src_prepare() {
-	#epatch ${FILESDIR}/gtk-sharp.patch
+	epatch "${FILESDIR}/gtk-sharp.patch"
 	base_src_prepare
 	eautoreconf
 	libtoolize
@@ -61,6 +58,6 @@ src_compile() {
 
 src_install() {
 	default
-	dotnet_multilib_comply
+	#dotnet_multilib_comply
 	sed -i "s/\\r//g" "${D}"/usr/bin/* || die "sed failed"
 }
