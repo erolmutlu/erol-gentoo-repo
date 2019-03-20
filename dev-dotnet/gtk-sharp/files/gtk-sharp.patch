@@ -7,6 +7,6 @@ diff --git a/gtk/gui-thread-check/profiler/gui-thread-check.c b/gtk/gui-thread-c
  	mono_profiler_install (NULL, NULL);
  	mono_profiler_install_enter_leave (simple_method_enter, NULL);
 -	mono_profiler_set_events (MONO_PROFILE_ENTER_LEAVE);
-+	// mono_profiler_set_events (MONO_PROFILE_ENTER_LEAVE);
++	mono_profiler_set_events (1 << 12);
  }
  
