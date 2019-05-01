@@ -43,8 +43,8 @@ src_install() {
 	doins -r * || die
 	fperms a+rx ${d}/${MY_PN}.sh
 
-	dodir /opt/bin
-	dosym ../${MY_PN}/${MY_PN}.sh /opt/bin/${MY_PN} || die
+	dodir /opt/projectlibre
+	dosym ../${MY_PN}/${MY_PN}.sh /opt/projectlibre/${MY_PN} || die
 
 	doicon ../${MY_PN}.png
 	domenu ../${MY_PN}.desktop
