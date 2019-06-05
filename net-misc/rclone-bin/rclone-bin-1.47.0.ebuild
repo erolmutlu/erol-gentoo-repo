@@ -9,7 +9,7 @@ LICENSE='MIT'
 
 PN_NO_BIN="${PN%-bin}"
 SLOT='0'
-src_uri_base="http://downloads.rclone.org/${PN_NO_BIN}-v${PV}-linux"
+src_uri_base="http://downloads.rclone.org/v${PV}/${PN_NO_BIN}-v${PV}-linux"
 SRC_URI="
 	amd64?	( ${src_uri_base}-amd64.zip )
 	arm?	( ${src_uri_base}-arm.zip )
