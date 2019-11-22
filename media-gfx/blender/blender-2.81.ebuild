@@ -11,7 +11,7 @@ inherit check-reqs cmake-utils xdg-utils flag-o-matic xdg-utils \
 DESCRIPTION="3D Creation/Animation/Publishing System"
 HOMEPAGE="https://www.blender.org"
 
-SRC_URI="https://github.com/blender/blender/archive/v2.81.tar.gz"
+SRC_URI="https://github.com/erolmutlu/erol-gentoo-repo/raw/master/distfiles/${P}.tar.gz"
 #SRC_URI="https://download.blender.org/source/${P}.tar.gz"
 
 # Blender can have letters in the version string,
