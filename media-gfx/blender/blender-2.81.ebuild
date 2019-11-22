@@ -102,12 +102,12 @@ DEPEND="${RDEPEND}
 	)
 	nls? ( sys-devel/gettext )"
 
-PATCHES=(
-	"${FILESDIR}/${P}-fix-install-rules.patch"
-	"${FILESDIR}/${P}-link-cycles-standalone-with-opengl.patch"
-	"${FILESDIR}/${P}-fix-draco-directory.patch"
-	"${FILESDIR}/${P}-fix-Embree-capitalisation.patch"
-)
+#PATCHES=(
+#	"${FILESDIR}/${P}-fix-install-rules.patch"
+#	"${FILESDIR}/${P}-link-cycles-standalone-with-opengl.patch"
+#	"${FILESDIR}/${P}-fix-draco-directory.patch"
+#	"${FILESDIR}/${P}-fix-Embree-capitalisation.patch"
+#)
 
 blender_check_requirements() {
 	[[ ${MERGE_TYPE} != binary ]] && use openmp && tc-check-openmp
