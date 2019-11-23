@@ -42,6 +42,7 @@ RDEPEND="${PYTHON_DEPS}
 	dev-libs/lzo:2
 	dev-python/numpy[${PYTHON_USEDEP}]
 	dev-python/requests[${PYTHON_USEDEP}]
+	dev-cpp/tbb
 	media-libs/freetype
 	media-libs/glew:*
 	media-libs/libpng:0=
