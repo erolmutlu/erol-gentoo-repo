@@ -4,7 +4,7 @@
 EAPI=7
 
 PYTHON_COMPAT=( python2_7 )
-inherit eutils systemd unpacker pax-utils python-single-r1
+inherit eutils user systemd unpacker pax-utils python-single-r1
 
 COMMIT="5a96726d0"
 
@@ -32,12 +32,9 @@ IUSE="pax_kernel system-openssl avahi"
 
 DEPEND="
 	pax_kernel? ( sys-apps/fix-gnustack )
-	dev-python/virtualenv[${PYTHON_USEDEP}]
-	dev-util/patchelf"
+	dev-python/virtualenv[${PYTHON_USEDEP}]"
 
 RDEPEND="
-	acct-user/plex
-	acct-group/plex
 	avahi? ( net-dns/avahi )
 	system-openssl? ( dev-libs/openssl:0 )
 	${PYTHON_DEPS}"
@@ -49,8 +46,7 @@ QA_MULTILIB_PATHS=(
 	"usr/lib/${_APPNAME}/Resources/Python/lib/python2.7/.*"
 )
 
-EXECSTACKED_BINS=( )
-
+EXECSTACKED_BINS=( "${ED%/}/usr/lib/plexmediaserver/libgnsdk_dsp.so*" )
 BINS_TO_PAX_MARK=(
 	"${ED%/}/usr/lib/plexmediaserver/Plex Script Host"
 	"${ED%/}/usr/lib/plexmediaserver/Plex Media Scanner"
@@ -65,6 +61,8 @@ PATCHES=(
 )
 
 pkg_setup() {
+	enewgroup ${_USERNAME}
+	enewuser ${_USERNAME} -1 /bin/bash /var/lib/${_APPNAME} "${_USERNAME},video"
 	python-single-r1_pkg_setup
 }
 
@@ -128,9 +126,6 @@ src_install() {
 	local INIT_NAME="${PN}.service"
 	local INIT="${FILESDIR}/systemd/${INIT_NAME}"
 	systemd_newunit "${INIT}" "${INIT_NAME}"
-
-	# Fix RPATH
-	patchelf --force-rpath --set-rpath '$ORIGIN:$ORIGIN/../../../../../../lib' "${ED%/}"/usr/lib/plexmediaserver/Resources/Python/lib/python2.7/lib-dynload/_codecs_kr.so || die
 
 	# Add PaX marking for hardened systems
 	if use pax_kernel; then
