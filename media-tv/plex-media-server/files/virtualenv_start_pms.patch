@@ -1,13 +1,12 @@
-diff -Naur a/usr/sbin/start_pms b/usr/sbin/start_pms
---- a/usr/sbin/start_pms	2020-01-17 05:17:10.000000000 +0100
-+++ b/usr/sbin/start_pms	2020-01-22 11:37:31.352913108 +0100
-@@ -29,6 +29,9 @@
-   export PLEX_MEDIA_SERVER_USER="$PLEX_USER"
- fi
+--- a/usr/sbin/start_pms	2019-01-04 14:57:17.158769341 +0100
++++ b/usr/sbin/start_pms	2019-01-04 15:09:54.555128630 +0100
+@@ -20,6 +20,9 @@
+ 
+ test -f /etc/default/plexmediaserver && . /etc/default/plexmediaserver
  
 +# Activate python virtualenv
-+. "$PLEX_MEDIA_SERVER_HOME/Resources/Python/bin/activate"
++. "${PLEX_MEDIA_SERVER_HOME}"/Resources/Python/bin/activate
 +
- # Create AppSuppDir if not present
- if [ ! -d "$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR" ]; then
+ if [ ! -d "$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR" ]
+ then
    mkdir -p "$PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR"
