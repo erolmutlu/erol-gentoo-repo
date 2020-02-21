@@ -5,8 +5,7 @@ EAPI="6"
 
 PYTHON_COMPAT=( python3_7 )
 
-inherit check-reqs cmake-utils xdg-utils flag-o-matic xdg-utils \
-	pax-utils toolchain-funcs eapi7-ver #python-single-r1
+inherit check-reqs cmake-utils xdg-utils flag-o-matic xdg-utils	pax-utils python-single-r1 toolchain-funcs eapi7-ver
 
 DESCRIPTION="3D Creation/Animation/Publishing System"
 HOMEPAGE="https://www.blender.org"
@@ -39,8 +38,8 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}
 RDEPEND="${PYTHON_DEPS}
 	dev-libs/boost:=[nls?,threads(+)]
 	dev-libs/lzo:2
-	dev-python/numpy
-	dev-python/requests
+	dev-python/numpy[${PYTHON_SINGLE_USEDEP}]
+	dev-python/requests[${PYTHON_SINGLE_USEDEP}]
 	dev-cpp/tbb
 	media-libs/freetype
 	media-libs/glew:*
