@@ -6,12 +6,12 @@ EAPI=7
 PYTHON_COMPAT=( python2_7 )
 inherit eutils systemd unpacker pax-utils python-single-r1
 
-HASH_VERSION="f5213a238"
+MINOR_VERSION="2589-2de7f3266"
 
 _APPNAME="plexmediaserver"
 _USERNAME="plex"
 _SHORTNAME="${_USERNAME}"
-_FULL_VERSION="${PV}-${HASH_VERSION}"
+_FULL_VERSION="${PV}.${MINOR_VERSION}"
 
 URI="https://downloads.plex.tv/plex-media-server-new"
 
@@ -21,13 +21,16 @@ SRC_URI="
 	amd64? ( ${URI}/${_FULL_VERSION}/debian/plexmediaserver_${_FULL_VERSION}_amd64.deb )
 	x86? ( ${URI}/${_FULL_VERSION}/debian/plexmediaserver_${_FULL_VERSION}_i386.deb )
 "
-SLOT="plexpass"
+SLOT="0"
 LICENSE="Plex"
-RESTRICT="bindist strip"
-KEYWORDS="-* ~amd64"
+RESTRICT="bindist strip mirror"
+KEYWORDS="-* ~amd64 ~x86"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
-DEPEND="dev-python/virtualenv[${PYTHON_USEDEP}]"
+DEPEND="
+	$(python_gen_cond_dep '
+		dev-python/virtualenv[${PYTHON_MULTI_USEDEP}]
+	')"
 BDEPEND="dev-util/patchelf"
 
 RDEPEND="
@@ -35,16 +38,6 @@ RDEPEND="
 	acct-user/plex
 	net-dns/avahi
 	${PYTHON_DEPS}"
-
-if [ ${SLOT} = "plexpass" ]; then
-        RDEPEND="${RDEPEND}
-                !media-tv/plex-media-server:public
-        "
-elif [ ${SLOT} = "public" ]; then
-        RDEPEND="${RDEPEND}
-                !media-tv/plex-media-server:plexpass
-        "
-fi
 
 QA_DESKTOP_FILE="usr/share/applications/plexmediamanager.desktop"
 QA_PREBUILT="*"
@@ -60,9 +53,8 @@ BINS_TO_PAX_MARK=(
 
 S="${WORKDIR}"
 PATCHES=(
-	"${FILESDIR}/virtualenv_start_pms_2020.patch"
 	"${FILESDIR}/plexmediamanager.desktop.new.patch"
-	"${FILESDIR}/add_gentoo_profile_as_platform_version.patch"
+	"${FILESDIR}/plexmediaserver.service.patch"
 )
 
 src_unpack() {
@@ -70,11 +62,8 @@ src_unpack() {
 }
 
 src_install() {
-	# Move the config to the correct place
-	local config_vanilla="/etc/default/plexmediaserver"
-	local config_path="/etc/${_SHORTNAME}"
-	dodir "${config_path}"
-	sed -e "s#${config_vanilla}#${config_path}/${_APPNAME}#g" -i "${S}"/usr/sbin/start_pms || die
+	# Remove Debian apt repo files
+	rm -r "etc/apt" || die
 
 	# Remove Debian specific files
 	rm -r "usr/share/doc" || die
@@ -113,6 +102,10 @@ src_install() {
 		pax-mark m "${f}"
 	done
 
+	# Install start_pms script
+	into /usr
+	dosbin "${FILESDIR}/start_pms"
+
 	einfo "Configuring virtualenv"
 	virtualenv -v --no-pip --no-setuptools --no-wheel "${ED}"/usr/lib/plexmediaserver/Resources/Python || die
 	pushd "${ED}"/usr/lib/plexmediaserver/Resources/Python &>/dev/null || die
@@ -141,4 +134,3 @@ _mask_plex_libraries_revdep() {
 	# then so should we.
 	echo "SEARCH_DIRS_MASK=\"${EPREFIX}/usr/lib/plexmediaserver\"" > "${ED}"/etc/revdep-rebuild/80plexmediaserver
 }
-
