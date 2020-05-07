@@ -9,7 +9,7 @@ inherit mono-env gnome2
 
 DESCRIPTION="Video subtitling for the Gnome desktop"
 HOMEPAGE="http://gnome-subtitles.sourceforge.net/"
-SRC_URI="https://sourceforge.net/projects/gnome-subtitles/files/gnome-subtitles/1.6/gnome-subtitles-1.6.tar.gz"
+SRC_URI="mirror://sourceforge/gnome-subtitles/${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
