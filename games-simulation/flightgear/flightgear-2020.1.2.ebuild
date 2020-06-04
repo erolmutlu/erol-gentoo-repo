@@ -20,6 +20,7 @@ RESTRICT="test"
 
 # zlib is some strange auto-dep from simgear
 COMMON_DEPEND="
+	app-accessibility/flite
 	dev-db/sqlite:3
 	dev-games/openscenegraph[jpeg,png]
 	~dev-games/simgear-${PV}[gdal=]
