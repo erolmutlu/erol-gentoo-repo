@@ -11,7 +11,7 @@ inherit check-reqs cmake-utils xdg-utils flag-o-matic xdg-utils \
 DESCRIPTION="3D Creation/Animation/Publishing System"
 HOMEPAGE="https://www.blender.org"
 
-SRC_URI="https://download.blender.org/source/${P}.0.tar.xz"
+SRC_URI="https://download.blender.org/source/${P}.tar.xz"
 
 # Blender can have letters in the version string,
 # so strip off the letter if it exists.
