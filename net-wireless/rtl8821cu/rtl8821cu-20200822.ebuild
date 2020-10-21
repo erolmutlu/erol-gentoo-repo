@@ -4,7 +4,7 @@
 EAPI=7
 inherit linux-mod
 
-COMMIT="5c510c9f14352fed4906a10921040b9e46b58346"
+COMMIT="45a8b4393e3281b969822c81bd93bdb731d58472"
 
 DESCRIPTION="Realtek 8821(*U)/8811CU/8812A/8192E/8814A/8822B/8723(*U)/8188E(**) module for Linux kernel"
 HOMEPAGE="https://github.com/brektrou/rtl8821CU"
